@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>流量统计代码</title>
+
+<link rel="stylesheet" type="text/css" href="__ADMIN__/Public/css/base.css" />
+<script src="__ADMIN__/Public/js/jquery-1.7.1.min.js"></script>
+<script src="__ADMIN__/Public/js/base.js"></script>
+
+<script>
+$(function(){
+	$('input[name=weibo_type][value=<?php echo $obj["weibo_type"] ?>]').attr('checked',true);
+	
+	$('input[name=is_share][value=<?php echo $obj["is_share"] ?>]').attr('checked',true);
+	
+	$('input[name=is_customer][value=<?php echo $obj["is_customer"] ?>]').attr('checked',true);
+	
+	$('input[name=is_qq][value=<?php echo $obj["is_qq"] ?>]').attr('checked',true);
+	
+	$('a[title=站长统计]').addClass('button').text('查看流量');
+});
+
+</script>
+
+</head>
+<body>
+<div class="nav-site">{~getNavSite($nav_site,2)} &gt; 系统设置 &gt; 第三方代码</div>
+
+<form action="__APP__/Admin/System/saveTertiaryCode" method="post" class="form">
+   <fieldset>
+       <ul class="align-list">
+       		<li>
+               <label>微博秀插件</label>
+			   <input type="radio" name="weibo_type" value="sina" checked="checked"> 新浪&nbsp;&nbsp;&nbsp;<input type="radio" name="weibo_type" value="qq"> 腾讯 <br>
+               <label><a href="http://app.weibo.com/tool/weiboshow" target="_blank" style="color:red;font-weight: normal;text-decoration: underline;">获取新浪秀</a><br><br>
+			   <a href="http://dev.t.qq.com/websites/show?explain=3" target="_blank" style="color:red;font-weight: normal;text-decoration: underline;">获取腾讯秀</a></label>
+			   <textarea id="weibo_plug" name="weibo_plug" cols="100" rows="5">{$obj.weibo_plug|htmlspecialchars_decode}</textarea>
+           </li>
+           <li>
+               <label>开启分享代码</label>
+			   <input type="radio" name="is_share" value="1" checked="checked"> 开启&nbsp;&nbsp;&nbsp;<input type="radio" name="is_share" value="0"> 关闭 <br>
+               <label><a href="http://share.baidu.com/" target="_blank" style="color:red;font-weight: normal;text-decoration: underline;">获取代码</a></label>
+			   <textarea id="share" name="share_plug" cols="100" rows="5">{$obj.share_plug|htmlspecialchars_decode}</textarea>
+           </li>
+		   <li>
+               <label>开启在线客服代码</label>
+               <input type="radio" name="is_customer" value="1" checked="checked"> 开启&nbsp;&nbsp;&nbsp;<input type="radio" name="is_customer" value="0"> 关闭 <br>
+			   <label><a href="http://www.53kf.com/53kfkefu.html" target="_blank" style="color:red;font-weight: normal;text-decoration: underline;">获取代码</a></label>
+			   <textarea id="customer_code" name="customer_code" class="type-text" rows="5">{$obj.customer_code}</textarea>
+           </li>
+		   <li>
+               <label>开启QQ客服代码 </label>
+			   <input type="radio" name="is_qq" value="1" checked="checked"> 开启&nbsp;&nbsp;&nbsp;<input type="radio" name="is_qq" value="0"> 关闭 <br>
+			   <label></label>
+			   <input id="qq_nums" name="qq_nums" class="type-text" value="{$obj.qq_nums}" style="width: 50%;"> 最多4个QQ号,用逗号","隔开
+           </li>
+           <li>
+               <label>流量统计代码 <br><br>
+			   <a href="http://www.cnzz.com/" target="_blank" style="color:red;font-weight: normal;text-decoration: underline;">获取代码</a><br><br>
+			   {$obj.flow_code}<br><br><span style="font-weight: lighter;">查看密码：adminyy</span>
+			   </label>
+			   <textarea id="flow_code" name="flow_code" class="type-text" rows="6">{$obj.flow_code}</textarea>
+           </li>
+		   <li>
+               <label></label>
+           </li>
+           <li>
+               <label></label>
+               <input type="submit" value="确定并保存" name="save" class="button button-green button-big" />
+			</li>
+        </ul>
+    </fieldset>
+</form>
+
+</body>
+</html>

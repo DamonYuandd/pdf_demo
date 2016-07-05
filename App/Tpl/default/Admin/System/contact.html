@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>网站信息设置</title>
+
+<link rel="stylesheet" type="text/css" href="__ADMIN__/Public/css/base.css" />
+<script src="__ADMIN__/Public/js/jquery-1.7.1.min.js"></script>
+<script src="__ADMIN__/Public/js/base.js"></script>
+
+<script>
+$(function(){
+	$("input[name=lang][value=<?php echo $_GET['lang'];?>]").attr("checked",true);
+
+	$("input[name=lang]").click(function(){
+		window.location.href = '__APP__/Admin/System/index/lang/'+$(this).val()+'/cid/{.cid}';
+	});
+});
+</script>
+
+
+
+</head>
+<body>
+<div class="nav-site">{~getNavSite($nav_site,2)} &gt; 系统设置 &gt; 网站联系方式</div>
+
+<form action="__APP__/Admin/System/saveSetting" method="post" class="form">
+	<input type="hidden" name="hardware" value="{$Think.session.hardware}">
+   <fieldset>
+       <ul class="align-list">
+       		{~isLang()}
+           <li>
+               <label>公司名称</label>
+               <input type="text" id="company" name="company" value="{$system.company}" class="type-text">
+           </li>
+            <li>
+               <label>联系人</label>
+               <input type="text" id="linkman" name="linkman" value="{$system.linkman}" class="type-text">
+           </li>
+           <li>
+               <label>联系电话</label>
+               <input type="text" id="telephone" name="telephone" value="{$system.telephone}" class="type-text">
+           </li>
+           <li>
+               <label>传真</label>
+               <input type="text" id="fax" name="fax" value="{$system.fax}" class="type-text">
+           </li>
+           <li>
+               <label>联系地址</label>
+               <input type="text" id="address" name="address" value="{$system.address}" class="type-text">
+           </li>
+           <li>
+               <label>邮政编码</label>
+               <input type="text" id="postcode" name="postcode" value="{$system.postcode}" class="type-text">
+           </li>
+           <li>
+               <label>邮箱地址</label>
+               <input type="text" id="email" name="email" value="{$system.email}" class="type-text">
+           </li>
+		   
+		   <li>
+			   {~echoLangsCheckbox($_GET['lang'])}
+           </li>
+           <li>
+               <label></label>
+           </li>
+           <li>
+               <label></label>
+               <input type="submit" value="确定并保存" name="save" class="button button-green button-big" />
+            </li>
+        </ul>
+    </fieldset>
+</form>
+
+</body>
+</html>

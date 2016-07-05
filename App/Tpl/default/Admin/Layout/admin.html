@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>网站后台管理系统</title>
+
+<link rel="stylesheet" type="text/css" href="__ADMIN__/Public/css/base.css" />
+
+<script src="__ADMIN__/Public/js/jquery-1.7.1.min.js"></script>
+<script src="__ADMIN__/Public/js/layout/jquery.layout.js"></script>
+
+<style type="text/css">
+#top_nav_box{position: absolute;top: 49px;left: 215px;height:31px;overflow:hidden;width:1050px;}
+.top-nav{list-style: none;margin:0;padding:0; position:absolute;height:31px;width:1050px;}
+.nav_arrow_left{z-index:999;position: absolute;cursor:pointer;display:none;}
+.nav_arrow_right{z-index:999;right:0px;position: absolute;cursor:pointer;display:none;}
+.top-nav li{float:left; height:31px;background:url(__ADMIN__/Public/imgs/nav_02.jpg) no-repeat left;overflow:hidden;margin:0 1px;}
+.top-nav li.home{background:url(__ADMIN__/Public/imgs/nav_01.jpg) no-repeat left;}
+.top-nav li a{display:block;text-align:center; width:68px;height:31px;color: #5666a1;line-height: 31px;text-decoration:none;overflow:hidden;}
+
+.top-nav li a:hover {background-color: #395e9f;color:#395e9f;background:url(__ADMIN__/Public/imgs/nav_01.jpg) no-repeat left;}
+
+.header-title{background:url(__ADMIN__/Public/imgs/logo_<?php echo $_SESSION['hardware']=='pc'?'pc':'mobile';?>.gif) no-repeat left;width:100%;height:78px;background-color: #013a6f;}
+.header-title h1 {color: white;font-size: 26px;height: 24px;font-weight: bold;padding-top: 20px;padding-left: 10px;}
+
+.ui-layout-resizer-west{background-color:#0e0e0d;}
+.ui-layout-toggler-west{background-color:#B50033;}
+.ui-layout-pane-north{background-color:#0e0e0d;}
+#top_right{float: right;margin-top: -35px;color:#fff;}
+#top_right a{color:#ffffff;}
+</style>
+
+<script>
+var qweb_layout = null;
+$(document).ready(function () {
+
+	qweb_layout = $('body').layout({
+			north__size: 80,
+			north__fxName: "none",
+			west__size:	210,
+			north__spacing_open: 0
+	});
+	
+	$('.top-nav li a#home').css({'background':'url(__ADMIN__/Public/imgs/nav_01.jpg) no-repeat left','color':'#395e9f'});
+
+	$('#lang').val('{@admin.lang}');
+
+	$('#lang').change(function() {
+		$.get('__APP__/Admin/Index/checkedLang',{'lang':$(this).val()},function(){
+			//mainFrame.location.reload();
+			//leftFrame.location.reload();
+			window.location.reload();
+		});
+	});
+	qweb_layout.close('west');
+	
+	//window--resize
+	var nav_box_w = document.getElementById("top_nav_box").offsetWidth;
+	var iNum = 215;
+	var scrllo_box = $(".top-nav");
+	var nav_li_first_w = $(".top-nav li:first").width();
+	var body_w = 0;
+	var unll_iNum = 0;
+	
+	function Object_resize(){
+		unll_iNum = 0;
+		var visible_body_w = document.body.clientWidth;
+		if(visible_body_w - iNum > nav_box_w){
+			scrllo_box.animate({"right":0});
+			$(".nav_arrow_right,.nav_arrow_left").hide();
+		}else{
+			var count_w = nav_box_w -(visible_body_w - iNum);
+			body_w = count_w;
+			$(".nav_arrow_right").css({"right":body_w});
+			$(".nav_arrow_left").css({"right":body_w + 15});
+			$(".nav_arrow_right,.nav_arrow_left").show();
+		}
+	}
+	
+	Object_resize();
+	
+	$(window).resize(function(){
+		Object_resize()
+	});
+
+	$(".nav_arrow_right").click(function(){						 
+		unll_iNum += nav_li_first_w;
+		var scrllo_bov_right = parseInt(scrllo_box.css("right")) + parseInt(nav_li_first_w);
+		if(scrllo_bov_right > body_w){
+			unll_iNum = body_w;
+			scrllo_box.stop().animate({"right":unll_iNum + 30});
+		}else{
+			scrllo_box.stop().animate({"right":unll_iNum});
+		}
+	})
+	$(".nav_arrow_left").click(function(){
+		unll_iNum -= parseInt(nav_li_first_w);
+		var scrllo_bov_right = parseInt(scrllo_box.css("right")) - parseInt(nav_li_first_w);
+		if(scrllo_bov_right == 0 || scrllo_bov_right < 0){
+			scrllo_box.stop().animate({"right":0});
+			unll_iNum = 0;
+		}else{
+			scrllo_box.stop().animate({"right":unll_iNum});
+		}
+	})
+	
+});
+
+function toURLIframe( url ){
+	document.getElementById('mainFrame').src = url;
+}
+
+function goToModule(_this, main_url, left_url ) {
+	$(_this).css({'background':'url(__ADMIN__/Public/imgs/nav_02.jpg) no-repeat left'});
+	$('.top-nav li').removeClass("home");
+	$('.top-nav li a').css({'background':'','color':'#6774A8'});
+	$(_this).css({'background':'url(__ADMIN__/Public/imgs/nav_01.jpg) no-repeat left','color':'#395e9f'});
+	$("#mainFrame",parent.document.body).attr("src",'__APP__/Admin/'+main_url);
+	$("#leftFrame",parent.document.body).attr("src",'__APP__/Admin/'+left_url);
+	if($(_this).attr('id')=='Home') {
+		qweb_layout.close('west');
+	} else {
+		qweb_layout.open('west');
+	}
+	return false;
+}
+
+function closeLayout($close) {
+	window.qweb_layout.close($close);
+}
+</script>
+
+</head>
+<body>
+
+<div class="ui-layout-north">
+	<div class="header-title" style="background-color:#0e0e0d;">
+        <h1></h1>
+        <div id="top_right">
+			<!--语言切换
+            <select id="lang">
+            	<option value="all">全部</option>
+            <volist name="langList" id="vo">
+                <option value="{$vo.alias}">{$vo.title}</option>
+            </volist>
+			</select>-->&nbsp;&nbsp;&nbsp;
+            <a href="#" onClick="toURLIframe('__APP__/Admin/User/password')">修改密码</a>&nbsp;&nbsp;&nbsp;
+            <a href="__APP__/Admin/Public/logout">退出系统</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div id="top_nav_box">
+            <ul class="nav_arrow_left"><img src="__ADMIN__/Public/imgs/nav_arrow_left.png"></ul>
+            <ul class="nav_arrow_right"><img src="__ADMIN__/Public/imgs/nav_arrow_right.png"></ul>
+            <ul class="top-nav">
+                <li class="home"><a href="javascript:void(0)" id="Home" onClick="goToModule(this,'Index/main','Index/mainMenu')">系统首页</a></li>
+                <volist name="moduleList" id="vo">
+                	<?php
+						if( !empty($vo['burl']) ) {
+							$main_url = $vo['burl'];
+						} else {
+							$main_url = $vo['module'].'/index/c_root/'.$vo['id'].'/cid/'.$vo['first_cid'].'/lang/'.$vo['lang'];
+						}
+                        if( $vo['alias']=='Contact' && $_SESSION['hardware']=='pc' ) {
+							$main_url = $vo['module'].'/index/c_root/'.$vo['id'].'/cid/'.$vo['first_cid'].'/lang/'.$vo['lang'];
+						}
+                        if( $vo['alias']=='Market' && $_SESSION['hardware']=='mobile' ) {
+                    	    $main_url = $vo['module'].'/edit/c_root/'.$vo['id'].'/cid/'.$vo['first_cid'].'/lang/'.$vo['lang'];
+                       	}
+					?>
+                	<li><a href="javascript:void(0)" id="{$vo.alias}" onClick="goToModule(this,'<?php echo $main_url;?>','Index/sidemenu/pid/{$vo.id}/cid/{$vo.first_cid}/lang/{$vo.lang}')">{~getDefNavTitle(json_decode($vo['title'],true),$_SESSION['lang'])}</a></li>
+                </volist>
+                <li><a href="javascript:void(0)" id="System" onClick="goToModule(this,'System/index/cid/base','Index/sidemenu')">投票管理</a></li>
+                <li><a href="__APP__" target="_blank" id="Home" style="color:#273E93;font-weight:bold;">网站首页</a></li>
+            </ul>
+        </div>
+	</div>
+</div>
+
+<iframe id="mainFrame" class="ui-layout-center" width="100%" height="100%" frameborder="0" scrolling="auto" src="__APP__/Admin/Index/main"></iframe>
+
+
+<iframe id="leftFrame" class="ui-layout-west" width="100%" height="100%" frameborder="0" scrolling="auto" src=""></iframe>
+
+</body>
+</html>

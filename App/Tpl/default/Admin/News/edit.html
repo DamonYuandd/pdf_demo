@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>编辑内容</title>
+<layout name="Inc:edit_page" cache="0" />
+<layout name="Inc:ueditor" cache="0" />
+
+</head>
+<body>
+<div class="nav-site">{~getNavSite($nav_site,$_GET['cid'])} > 编辑内容</div>
+<form action="__APP__/Admin/News/<?php echo $obj==null?'add':'update'; ?>" method="post" enctype="multipart/form-data" class="form">  
+	<input type="hidden" id="id" name="id" value="{$obj.id}">
+	<input type="hidden" name="category_id" value="{.cid}">
+	<input type="hidden" name="is_publish" value="1">
+	<input type="hidden" name="hardware" value="{$Think.session.hardware}">
+	<input type="hidden" name="lang" value="{.lang}">
+   <fieldset>
+       <ul class="align-list">
+           <li>
+               <label>当前分类</label>
+               {~getCurCategoryNav($_GET['cid'])}
+           </li>
+           <li>
+               <label>正文标题</label>
+               <input type="text" id="title" name="title" value="{$obj.title}" class="type-text">
+           </li>
+           <li>
+               <label>正文描述</label>
+               <textarea id="content" name="content" style="margin-left:200px;margin-left: 140px;margin-top: -25px;margin-bottom: 10px;">{$obj.content|htmlspecialchars_decode}</textarea>
+           	   <script type="text/javascript">
+				    var editor = new baidu.editor.ui.Editor();
+				    editor.render("content");
+				</script>
+		   </li>
+           <li>
+               <label>正文摘要</label>
+               <textarea id="summary" name="summary" cols="100" rows="3">{$obj.summary}</textarea>
+           </li>
+           <li>
+               <label>正文插图</label>
+               <?php if( !empty($obj['image']) ) { ?>
+               <span id="span_image">
+               	<input type="hidden" name="image" value="{$obj.image}">
+			   <img alt="" align="middle" height="80" vspace="5" src="<?php echo __ROOT__.'/Public/images/news/s_'.$obj['image']; ?>">
+           	   <a href="javascript:void(0)" id="delete_image">删除封面</a>&nbsp;&nbsp;&nbsp;&nbsp;
+           	   </span>
+           	   <?php } ?>
+			    <input type="file" name="image">
+           </li>
+           <li>
+           		<label>更多可选项</label>
+				<input type="checkbox" id="more_options"> <small class="fc-999"> --您还可以对这篇文章填写更多的相关信息</small>
+		   </li>
+           <div id="more_options_box" class="more-box hide">
+           <li>
+               <label>作者</label>
+               <input type="text" id="author" name="author" value="{$obj.author}" class="type-text">
+           </li>
+           <li>
+               <label>来源</label>
+               <input type="text" id="source" name="source" value="{$obj.source}" class="type-text">
+           </li>
+           <li>
+               <label>更新时间</label>
+               <input type="text" id="update_time" name="update_time" onClick="WdatePicker()" value="<?php echo (!isset($obj['update_time'])) ? date('Y-m-d') : date('Y-m-d', $obj['update_time']);?>" class="type-text">
+           </li>
+           <li>
+               <label>发布时间</label>
+               <input type="text" id="create_time" name="create_time" onClick="WdatePicker()" value="<?php echo (!isset($obj['create_time'])) ? date('Y-m-d') : date('Y-m-d', $obj['create_time']);?>" class="type-text">
+           </li>
+           </div>
+           <li>
+	           	<label>SEO优化</label>
+				<input type="checkbox" id="more_seo"> <small class="fc-999"> --您还可以单独设置这篇文章搜索引擎关键字收录</small>
+		    </li>
+           <div id="more_seo_box" class="more-box hide">
+           <li>
+               <label>页面标题<br>(Title)</label>
+               <input type="text" id="seo_title" name="seo_title" value="{$obj.seo_title}" class="type-text">
+           </li>
+           <li>
+               <label>页面关键字<br>(Keywords)</label>
+               <input type="text" id="seo_keywords" name="seo_keywords" value="{$obj.seo_keywords}" class="type-text">
+           </li>
+           <li>
+               <label>页面描述<br>(Description)</label>
+               <input type="text" id="seo_description" name="seo_description" value="{$obj.seo_description}" class="type-text">
+           </li>
+           </div>
+
+		   <?php if( $_SESSION['hardware']=='pc' ) { ?>
+            <li id="li_synch_mobile">
+                <label>手机同步</label>
+                <input type="checkbox" name="synch_mobile" id="synch_mobile" value="1"> <small class="fc-999"> --如果手机版对应栏目也有这篇文章，您还可以同步过去</small>
+            </li>
+			<li id="li_mobile_category">
+                <label>手机分类</label>
+                <select id="one_mobile_category_id" name="one_mobile_category_id" style="width:200px;" onchange="changeCategory(this,'two_mobile_category_id','mobile')">
+                	<option value="-1" selected="">请选择手机分类</option>
+					{~selectCateoryOptions($_SESSION['c_root'], 'all')}
+                </select>
+            </li>
+			<script>$('#li_mobile_category').hide();</script>
+            <?php } ?>
+			
+			{~isComment($category_is_comment)}
+           
+		   <li>
+               <label></label>
+           </li>
+           <li>
+               <label></label>
+               <input type="submit" value="确定并保存" name="save" class="button button-green button-big" />
+               <input type="button" value="返回列表" onclick="javascript:history.go(-1);" class="button button-big" />
+            </li>
+        </ul>
+    </fieldset>
+</form>
+
+<layout name="Inc:edit_seo_option" cache="0" />
+
+</body>
+</html>

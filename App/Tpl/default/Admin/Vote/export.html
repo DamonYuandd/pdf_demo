@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>编辑内容</title>
+<layout name="Inc:edit_page" cache="0" />
+<layout name="Inc:ueditor" cache="0" />
+
+</head>
+<body>
+<div class="nav-site">{~getNavSite($nav_site,$_GET['cid'])} > 导出</div>
+<form action="__APP__/Admin/News/<?php echo $obj==null?'add':'update'; ?>" method="post" enctype="multipart/form-data" class="form">  
+	<input type="hidden" id="id" name="id" value="{$obj.id}">
+	<input type="hidden" name="category_id" value="{.cid}">
+	<input type="hidden" name="is_publish" value="1">
+	<input type="hidden" name="hardware" value="{$Think.session.hardware}">
+	<input type="hidden" name="lang" value="{.lang}">
+   <fieldset>
+       <ul class="align-list">
+       		<li>
+               <label>&nbsp;&nbsp;</label>
+               <a href="__APP__/Admin/Index/excelPort?do=phone" >
+                	<input type="button" value="导出投票手机号码"  class="button  button-green button-big" />
+               </a>  
+           </li>
+            <li>
+               <label>&nbsp;&nbsp;</label>
+               <a href="__APP__/Admin/Index/excelPort?do=option" >
+                	<input type="button" value="导出参赛者信息"  class="button button-big" />
+               </a>  
+           </li>
+           
+        </ul>
+    </fieldset>
+</form>
+
+</body>
+</html>

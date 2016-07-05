@@ -1,0 +1,90 @@
+
+  ´ËSAEºËÐÄ×î´óµÄÌØµã¾ÍÊÇ£ºËü¾ßÓÐ¡°¿çÆ½Ì¨¡±µÄ¹¦ÄÜ£¬¿ÉÒÔÈÃÏàÍ¬µÄ³ÌÐò´úÂë£¬ ¼ÈÄÜÔÚSAEÆ½Ì¨ÏÂÔËÐÐ£¬ÓÖÄÜÔÚÆÕÍ¨»·¾³ÏÂÔËÐÐ¡£
+
+--------------------------------------------------------
+
+  ¿çÆ½Ì¨ÐÔ£¬Ö÷ÒªÌåÏÖÔÚÒ»ÏÂ¼¸¸ö·½Ãæ¡£
+
+£¨1£©Ä£°æ±àÒë»º´æ¡£
+
+  ÔÚÆÕÍ¨»·¾³ÏÂ£¬±àÒë»º´æ»áÕý³£µÄÔÚRuntime/CacheÄ¿Â¼ÏÂÉú³É¡£
+
+  ÔÚSAEÆ½Ì¨ÏÂ£¬±àÒë»º´æ»áÓÃMemcache´æ´¢¡£±àÒë»º´æµÄÊ±¼äºÍÕý³£Çé¿öÒ»ÏÂ¡£²»»áÊÜMemcacheµÄÓ°Ïì¡£
+
+£¨2£©Êý¾Ý¿âÅäÖÃ¡£
+
+  ÔÚÆÕÍ¨»·¾³ÏÂ£¬Êý¾Ý¿âÅäÖÃÒÔconfigÎÄ¼þÅäÖÃÎª×¼¡£
+
+  ÔÚSAEÆ½Ì¨ÏÂ£¬Êý¾Ý¿âÅäÖÃÏî¹Ì¶¨ÎªSAEµÄ³£Á¿¡£²¢¿ªÆôÁË·Ö²¼Ê½¡£ËùÒÔÔÚSEAÆ½Ì¨ÏÂ£¬²»ÓÃÐÞ¸ÄÊý¾Ý¿âÅäÖÃÏî¡£
+
+£¨3£©Ê¹ÓÃimportµ¼ÈëÀà¿â£¬Èçimport("ORG.Net.UploadFile")
+
+  ÔÚÆÕÍ¨»·¾³ÏÂ£¬µ¼ÈëUploadFile.class.phpÎÄ¼þ¡£
+
+  ÔÚSAEÆ½Ì¨ÏÂ£¬Èç¹û´æÔÚUploadFile_sae.class.phpÎÄ¼þ£¬Ôòµ¼Èësae×¨ÓÃÀà¿â£»Èç¹û²»´æÔÚ£¬µ¼ÈëÕý³£µÄUploadFile.class.phpÎÄ¼þ
+
+£¨4£©S»º´æ¡£
+
+  ÔÚÆÕÍ¨»·¾³ÏÂ£¬Ä¬ÈÏÎªÎÄ¼þ»º´æ·½Ê½¡£
+
+  ÔÚSAEÆ½Ì¨ÏÂ£¬Ä¬ÈÏÎªMemcache»º´æ·½Ê½¡£
+
+£¨5£©F»º´æ¡£
+ 
+  ÔÚÆÕÍ¨»·¾³ÏÂ£¬Ä¬ÈÏÎªÎÄ¼þ»º´æ·½Ê½¡£
+
+  ÔÚSAEÆ½Ì¨ÏÂ£¬ ÒÔKVDBÊµÏÖF»º´æ
+
+£¨6£©»¹¿ÉÒÔÊ¹ÓÃIS_SAE³£Á¿¡£
+  
+  ÔÚÆÕÍ¨»·¾³ÏÂ£¬IS_SAEµÄÖµÎªfalse¡£
+
+  ÔÚSAEÆ½Ì¨ÏÂ£¬IS_SAEµÄÖµÎªtrue¡£
+
+£¨7£©×Ô´øSAE·þÎñÄ£ÄâÆ÷¡£
+
+  ÈÃÓÃ»§ÔÚ±¾µØ»·¾³Ò²ÄÜÊ¹ÓÃSAEµÄ·þÎñ£¬ ÈçSaeStorage,KVDBµÈ¡£
+  
+  ½¨Á¢ÓÃ»§¿ªÆôPHPµÄsqlite3À©Õ¹£¬¿ªÆôºóÄ£ÄâÆ÷²»»áÔÚÄãµÄmysqlÊý¾Ý¿â½¨Á¢¶àÓàµÄÊý¾Ý¿â±í¡£
+
+------------------------------------------------------------
+
+  Ê¹ÓÃ·½·¨:
+
+  ´ËºËÐÄÖ»ÊÇÀ©Õ¹ÁËThinkPHPµÄMode£¬ÐèÒª°ÑÎÄ¼þ·ÅÔÚÔ­À´µÄºËÐÄÎÄ¼þ¼ÐÖÐ£¬ °ÑSaeThinkPHP.phpÎÄ¼þ·ÅÔÚºÍÔ­±¾µÄThinkPHP.phpÎÄ¼þÍ¬Ò»¸öÎÄ¼þ¼Ð¡£ °ÑModeÎÄ¼þ¼ÐÏÂµÄÎÄ¼þ£¬·ÅÔÚÔ­À´ºËÐÄµÄModeÎÄ¼þ¼ÐÏÂ¡£
+
+  È»ºóÐèÒªÔÚÈë¿ÚÎÄ¼þ°üº¬SaeºËÐÄÎÄ¼þ¡£
+
+<?php
+define("THINK_PATH","./ThinkPHP");
+define("APP_NAME","App");
+define("APP_PATH","./App");
+require THINK_PATH."/SaeThinkPHP.php";//°üº¬SaeºËÐÄÎÄ¼þ
+App::run();
+?>
+
+  ÇëÏÈµÇÂ¼SAE¹ÜÀíÆ½Ì¨£¬³õÊ¼»¯ÒÔÏÂ·þÎñ£º
+
+	Memcache£¨ÓÃÓÚ´¢´æ±àÒë»º´æ£¬S»º´æµÈ£©
+	KVDB£¨´æ´¢F»º´æ£©
+	Storage ½¨Á¢Ò»¸öÃûÎª"think"µÄÓò£¨ÈÕÖ¾ÎÄ¼þ£¬¾²Ì¬»º´æµÈ»á·ÅÔÚthinkÓòÏÂ£©
+
+  ×¢£ºSAEÏÂÄ¬ÈÏ¹Ø±ÕÁËÏµÍ³ÈÕÖ¾£¬ÈçÐè¿ªÆô£¬ÇëÅäÖÃ Mode/Sae/saeConfig.phpÖÐ 'LOG_EXCEPTION_RECORD'ºÍ'LOG_RECORD'¸ÄÎªtrue¡£  ÔÚSAEÏÂ¿ªÆôÈÕÖ¾ÏîÄ¿ÔËÐÐ±È½ÏÂý£¬ ½¨ÒéÐèÒªµ÷ÊÔµÄÊ±ºò²Å¿ªÆôÈÕÖ¾£¬ Ò»°ãÇé¿öÏÂ¹Ø±Õ¡£ ÏµÍ³ÈÕÖ¾Îª±£´æÔÚStorageÖÐ¡£
+
+  ÔÚSAEÆ½Ì¨ÏÂÉÏ´«ÎÄ¼þ£¬Ö»ÐèÒª°ÑUploadFile_sae.class.phpÎÄ¼þ·ÅÔÚºÍÆÕÍ¨ÉÏ´«ÀàUploadFile.class.php Í¬Ò»¸öÎÄ¼þ¼Ð¼´¿É¡£
+
+  ÉÏ´«´úÂë²»±ä¡£ Èç£º
+
+import("ORG.Net.UploadFile");
+$upload=new UploadFile('', 'jpg,png,gif,bmp','','./Public/Upload/',"time");
+if(!$upload->upload()){
+            $this->error($upload->getErrorMsg());
+}else{
+            $info=$upload->getUploadFileInfo();
+            dump($info['savename']);
+}
+
+  ÔÚÆÕÍ¨»·¾³ÏÂ£¬»áµ¼ÈëUploadFile.class.phpÎÄ¼þ£¬ÉÏ´«ÎÄ¼þ»á±£´æµ½./Public/Upload/Ä¿Â¼ÏÂ¡£
+
+  ÔÚSAEÆ½Ì¨ÏÂ£¬»áµ¼ÈëUploadFile_sae.class.phpÎÄ¼þ£¬´æ´¢µ½domainÎªUploadµÄstorageÏÂ¡£ 
+SAEÆ½Ì¨ÏÂ»á°ÑÉÏ´«Ä¿Â¼µ±×÷storageµÄdomain£¬ ÈçÉÏ´«µ½./Public/Upload/ÏÂ£¬domain¾ÍÎªUpload£¬ ÉÏ´«µ½ ./Public/Upload/img/ÏÂ domain¾

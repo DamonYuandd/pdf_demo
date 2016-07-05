@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>流量统计代码</title>
+
+<link rel="stylesheet" type="text/css" href="__ADMIN__/Public/css/base.css" />
+<script src="__ADMIN__/Public/js/jquery-1.7.1.min.js"></script>
+<script src="__ADMIN__/Public/js/base.js"></script>>
+
+<script>
+$(function(){
+	$('a[title=站长统计]').addClass('button').text('查看流量');
+});
+
+</script>
+
+</head>
+<body>
+<div class="nav-site">{~getNavSite($c_root,$_GET['cid'],$lang)}</div>
+
+<form action="__APP__/Admin/System/saveFlowCode" method="post" class="form">                          
+   <fieldset>
+       <ul class="align-list">
+           <li>
+               <label>流量统计代码</label>
+			   <textarea id="flow_code" name="flow_code" value="{$system.flow_code}" class="type-text" rows="10">{$flow_code}</textarea>
+           </li>
+           <li>
+               <label></label>
+               <input type="submit" value="确定并保存" class="button button-green" />
+               <input type="reset" value="重置" class="button button-red" />
+			   {$flow_code} 查看密码：adminyy
+            </li>
+        </ul>
+    </fieldset>
+</form>
+
+</body>
+</html>

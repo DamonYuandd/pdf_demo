@@ -1,0 +1,30 @@
+*{margin:0;padding:0;}
+
+.box{width:100%;height:100%;background:rgba(0,0,0,0.5);position:fixed;z-index:100;display:none;}
+button{width:199px;height:43px; background:url(../images/tj.jpg);border:0;outline:none;color:#fff; font-size:15px; color:#FFFFFF; text-align:center; line-height:43px;cursor:pointer;}
+button1{width:199px;height:43px; background:url(../images/tp.jpg);border:0;outline:none;color:#fff; font-size:15px; color:#FFFFFF; text-align:center; line-height:43px;cursor:pointer;}
+.hint{width:500px;height:332px;margin:0 auto; background:url(../images/ok_bg.png);position:fixed;top:50%;left:50%;margin-left:-250px;margin-top:-166px;z-index:111;display:none;}
+.hint1{width:500px;height:332px;margin:0 auto; background:url(../images/tp_bg.png);position:fixed;top:50%;left:50%;margin-left:-250px;margin-top:-166px;z-index:111;display:none;}
+.hint-in1{width:500px;height:70px;position:relative;}
+.hint1{width:48px;height:47px;background:url(../images/icon/hint1.png) no-repeat;-webkit-background-size:48px 47px;background-size:48px 47px;top:12px;left:98px;position:absolute;z-index:111;}
+.hint2{line-height:70px;color:#f4e8df;font-size:26px;padding-left:156px;}
+.hint3{width:38px;height:37px;background:url(../images/icon/hint3.png) no-repeat;-webkit-background-size:38px 37px;background-size:38px 37px; position:absolute;top:-22px;right:-18px;cursor:pointer;}
+.hint3:hover{width:38px;height:37px;background:url(../images/icon/hint33.png) no-repeat;-webkit-background-size:38px 37px;background-size:38px 37px; position:absolute;top:-22px;right:-18px;cursor:hand;cursor:pointer;}
+.hint-in2{line-height:25px;font-size:16px; text-align:center;color:#333; padding:25px 50px 0 50px;}
+.hint-in3{font-size:22px ;width:150px;height:50px;background:#d3748d;color:#fff;position:absolute;bottom:50px;left:155px;text-align:center;line-height:50px;border-radius:6px;cursor:pointer;}
+
+.hintl{width:500px;height:332px;margin:0 auto;background:#fff;position:fixed;top:50%;left:50%;margin-left:-250px;margin-top:-166px;z-index:111;display:none;}
+.hintl-in1{width:500px;height:70px;background:#ff6600;position:relative;}
+.hintl1{width:48px;height:47px;background:url(../images/icon/hint2.png) no-repeat;-webkit-background-size:48px 47px;
+background-size:48px 47px;top:12px;left:98px;position:absolute;z-index:111;}
+.hintl2{line-height:70px;color:#f4e8df;font-size:26px;padding-left:156px;}
+.hintl3{width:38px;height:37px;background:url(../images/icon/hint3.png) no-repeat;-webkit-background-size:38px 37px;background-size:38px 37px; position:absolute;top:7px;right:7px;cursor:pointer;}
+.hintl-in2{line-height:150px;font-size:20px; text-align:center;color:#ff6600;}
+.hintl-in3{font-size:22px ;width:90px;height:50px;background:#ff7800;color:#f4e8df;position:absolute;bottom:50px;left:108px;text-align:center;line-height:50px;border-radius:8px;cursor:pointer;}
+.hintl-in4{font-size:22px ;width:90px;height:50px;background:#d1cfcd;color:#fff;position:absolute;bottom:50px;right:108px;text-align:center;line-height:50px;border-radius:8px;cursor:pointer;}
+.b1 { width:199px; height:43px; background:url(../images/tj.jpg); line-height:43px; text-align:center; font-size:15px; color:#FFFFFF;}
+.b2 { width:350px; height:52px; margin:0 auto; text-align:center;}
+.b2 img { margin:25px 10px 0 10px;}
+.b3 { width:315px; height:45px; margin:0 auto; margin-bottom:20px; }
+.b4 { width:335px; height:52px; margin:0 auto; text-align:center;}
+.b4 img { margin:0px 10px 0 10px;}

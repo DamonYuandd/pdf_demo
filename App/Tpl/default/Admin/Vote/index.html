@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>默认数据表格</title>
+<link rel="stylesheet" type="text/css" href="__ADMIN__/Public/css/base.css" />
+<script src="__ADMIN__/Public/js/jquery-1.7.1.min.js"></script>
+<script src="__ADMIN__/Public/js/base.js"></script>
+
+<script>
+function Data(){
+	this._APP_ = "__APP__";
+	this.c_root = "<?php echo $_SESSION['c_root']; ?>";
+	this.get_cid = "<?php echo $_GET['cid']; ?>";
+	this.get_lang = "<?php echo $_GET['lang']; ?>";
+	this.def_lang = "<?php echo $custom['def_lang']; ?>"
+	this.rowpage = "<?php echo $rowpage; ?>";
+	this.actionName = "<?php echo $actionName;?>";
+}
+</script>
+<script src="__ADMIN__/Public/js/index.js"></script>
+
+</head>
+<body>
+
+<div class="nav-site">{~getNavSite($nav_site,$_GET['cid'])} 》 投票管理</div>
+
+<form action="__APP__/Admin/News" method="post" id="form_list">
+<input type="hidden" name="cid" value="{.cid}" />
+<table class="grid-function" border="0" cellpadding="0" cellspacing="0">
+	<thead>
+		<tr>
+			<th width="600">
+				
+			</th>
+		</tr>
+	</thead>
+	<!-- 移动和复制操作分类选择 -->
+	<layout name="Inc:category_lang" cache="0" />
+</table>
+<table class="grid-table" border="1" cellpadding="0" cellspacing="0"> 
+	<thead> 
+		<tr>
+			<th width="15"><input type="checkbox" id="chk_all"></th>
+			<th width="40">作品编号</th>
+			<th>组别</th>
+			<th>类型</th>
+		    <th width="40">头像</th>
+		    <th width="80">作者名称</th>
+		    <th>作品名称</th>
+		    <th>作品1</th>
+		    <th>作品2</th>
+		    <th>投票数量</th>
+		    <th>是否参选</th>
+		    <th>是否获奖</th>
+		    <th width="50">操作</th>
+		</tr> 
+	</thead>
+	<notempty name="data">
+	<tbody>
+		<volist name="data" id="vo">
+		<tr> 
+			<td><input type="checkbox" name="ids[]" id="ids{$vo.id}" value="{$i},{$vo.id}"></td>
+			<td>
+				{$vo.id}
+			</td>
+			<td>
+				 {:echoGroup($vo['group'],'group')}
+			</td>
+			<td>
+				  {:echoGroup($vo['type'],'type')}
+			</td>
+			<td>
+				<a href="__PUBLIC__/Uploads/{$vo.author_avatar}" target="_blank" >
+					<img src="__PUBLIC__/Uploads/{$vo.author_avatar}" width="100" height="100" />
+				</a>
+			</td>
+			<td>
+				{$vo.name}
+			</td>
+			<td>
+				{$vo.title}
+			</td>
+			<td>
+				<notempty name="vo['works_1']">
+					<a href="__PUBLIC__/Uploads/{$vo.works_1}" target="_blank" >
+						<img src="__PUBLIC__/Uploads/{$vo.works_1}" width="100" height="100" />
+					</a>
+				</notempty>
+			</td>
+			<td>
+				<notempty name="vo['works_2']">
+					<a href="__PUBLIC__/Uploads/{$vo.works_2}" target="_blank" >
+						<img src="__PUBLIC__/Uploads/{$vo.works_2}" width="100" height="100" />
+					</a>
+				</notempty>
+				 
+			</td>
+			<td>
+				{$vo.vote_num}
+			</td>
+			<td>
+				<eq name="vo['isFinalist']" value="1">
+						<span style="color:red">是</span>
+					<else/>
+						<span style="color:blue">否</span>
+				</eq>
+			</td>
+			<td>
+				<eq name="vo['isAwards']" value="1">
+						<span style="color:red">是</span>
+					<else/>
+						<span style="color:blue">否</span>
+				</eq>
+			</td>
+		    <td>
+		    	<a href="__APP__/Admin/Vote/edit/id/{$vo.id}">
+		    		<img src="__ADMIN__/Public/imgs/edit.png" />
+		    	</a>&nbsp;&nbsp;&nbsp;
+		    	<a href="#" onclick="javascript:deleteData('__APP__/Admin/Vote/delete/id/{$vo.id}');">
+		    		<img src="__ADMIN__/Public/imgs/cross.png" />
+		    	</a>
+		    	</td>
+		</tr>
+		</volist>
+	</tbody>
+	<else/>
+	<tbody>
+		<tr>
+			<td colspan="11" align="center" style="color:red;">没有找到数据！！！</td>
+		</tr>
+	</tbody>
+	</notempty>
+	<tfoot>
+		<tr>
+			<td colspan="11">
+				<div class="qw-fl">
+					 
+				</div>
+				<div class="qw-fr">
+					<div class="grid-pagination" style="margin:0px;">
+					{$pageBar}
+					</div>
+				</div>
+			</td>
+		</tr>
+	</tfoot>
+</table>
+</form>
+
+
+
+</body>
+</html>
+
+
+ 

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>编辑内容</title>
+
+<link rel="stylesheet" type="text/css" href="__ADMIN__/Public/css/base.css" />
+<script src="__ADMIN__/Public/js/jquery-1.7.1.min.js"></script>
+<script src="__ADMIN__/Public/js/base.js"></script>
+
+</head>
+<body>
+
+<div class="nav-site">{~getNavSite($nav_site,2)} &gt; 系统设置 &gt; 网站管理员 &gt; 编辑内容</div>
+
+<form action="__APP__/Admin/<?php echo $actionName;?>/<?php echo $obj==null?'add':'update'; ?>" method="post" class="form">  
+<input type="hidden" name="id" value="{$obj.id}">
+   <fieldset>
+       <ul class="align-list">
+           <li>
+               <label>用户名</label>
+               <input type="text" id="username" name="username" value="{$obj.username}" class="type-text">
+           </li>
+           <li>
+           	 <label>密码</label>
+             <input type="text" id="password" name="password" value="" class="type-text">
+           </li>
+           <li>
+           	 <label>昵称</label>
+             <input type="text" id="realname" name="realname" value="{$obj.realname}" class="type-text">
+           </li>
+           <li>
+           	 <label>备 注</label>
+             <textarea id="remark" name="remark" cols="100" rows="3">{$obj.remark}</textarea>
+           </li>
+           <li>
+               <label>现在启用?</label>
+               <input type="checkbox" id="is_publish" name="is_publish" value="1" checked="checked">
+           </li>
+           <li>
+               <label></label>
+           </li>
+           <li>
+               <label></label>
+               <input type="submit" value="确定并保存" name="save" class="button button-green button-big" />
+               <input type="button" value="返回列表" onclick="javascript:history.go(-1);" class="button button-big" />
+            </li>
+        </ul>
+    </fieldset>
+</form>
+
+</body>
+</html>

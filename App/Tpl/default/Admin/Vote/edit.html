@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>编辑内容</title>
+<layout name="Inc:edit_page" cache="0" />
+<layout name="Inc:ueditor" cache="0" />
+
+</head>
+<body>
+<div class="nav-site">{~getNavSite($nav_site,$_GET['cid'])} > 编辑内容</div>
+<form action="__APP__/Admin/Vote/update" method="post" enctype="multipart/form-data" class="form">  
+	<input type="hidden" id="id" name="id" value="{$obj.id}">
+
+   <fieldset>
+       <ul class="align-list">
+       		<li>
+               <label>编号</label>
+               {$obj.id}
+           </li>
+           <li>
+               <label>选择组别</label>
+               {:echoGroup($obj['group'],'group')}
+           </li>
+           <li>
+               <label>作品类型</label>
+               {:echoGroup($obj['type'],'type')}
+           </li>
+           <li>
+               <label>作品名称</label>
+               {$obj.title}
+           </li>
+           <li>
+               <label>作者姓名</label>
+               {$obj.name}
+           </li>
+           <li>
+               <label>作者年龄</label>
+               {$obj.age}
+           </li>
+           <li>
+               <label>所属地区</label>
+               {:echoGroup($obj['group'],'city')}
+           </li>
+           <li>
+               <label>指导老师</label>
+               {$obj.teacher}
+           </li>
+           <li>
+               <label>参赛单位名称</label>
+               {$obj.entry_mame}
+           </li>
+           <li>
+               <label>作者监护人</label>
+               {$obj.guardian}
+           </li>
+           <li>
+               <label>与作者关系</label>
+               {$obj.relation}
+           </li>
+           <li>
+               <label>监护人电话</label>
+               {$obj.phone}
+           </li>
+           <li>
+               <label>联系地址</label>
+               {$obj.address}
+           </li>
+           <li>
+               <label>监护人邮箱</label>
+               {$obj.email}
+           </li>
+           <li>
+               <label>作者头像</label>
+               <a href="__PUBLIC__/Uploads/{$obj.author_avatar}" target="_blank" >
+					<img src="__PUBLIC__/Uploads/{$obj.author_avatar}" width="100" height="100" />
+				</a>
+           </li>
+           <li>
+               <label>作品1</label>
+               
+               <notempty name="obj['works_1']">
+					<a href="__PUBLIC__/Uploads/{$obj.works_1}" target="_blank" >
+						<img src="__PUBLIC__/Uploads/{$obj.works_1}" width="100" height="100" />
+					</a>
+				</notempty>
+               
+           </li>
+           <li>
+               <label>作品1 尺寸</label>
+               {$obj.works_1_w} x {$obj.works_1_h}
+           </li>
+           <<li>
+               <label>作品2</label>
+               
+               <notempty name="obj['works_2']">
+					<a href="__PUBLIC__/Uploads/{$obj.works_2}" target="_blank" >
+						<img src="__PUBLIC__/Uploads/{$obj.works_2}" width="100" height="100" />
+					</a>
+				</notempty>
+               
+           </li>
+           <li>
+               <label>作品2 尺寸</label>
+               {$obj.works_2_w} x {$obj.works_2_h}
+           </li>
+           <li>
+           		<label>投票数</label>
+               {$obj.vote_num} 
+           </li>
+           <li>
+           	    <label>是否参选</label>
+             	<input type="checkbox" name="isFinalist" value="1" <eq name="obj['isFinalist']" value="1"> checked</eq> >
+           </li>
+            <li>
+           	    <label>是否获奖</label>
+             	<input type="checkbox" name="isAwards" value="1" <eq name="obj['isAwards']" value="1"> checked</eq>>
+           </li>
+           <li>
+               <label></label>
+               <input type="submit" value="确定"  class="button button-green button-big" />
+               <input type="button" value="返回列表" onclick="javascript:history.go(-1);" class="button button-big" />
+            </li>
+        </ul>
+    </fieldset>
+</form>
+
+<layout name="Inc:edit_seo_option" cache="0" />
+
+</body>
+</html>

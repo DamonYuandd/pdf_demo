@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>默认左侧菜单</title>
+
+<link rel="stylesheet" href="__ADMIN__/Public/css/base.css" type="text/css" />
+<script src="__ADMIN__/Public/js/jquery-1.7.1.min.js"></script>
+
+<style type="text/css">
+body{background-color:#FFFFFF;}
+#sidemenu{background-color:#feffff;}
+#sidemenu ul {font-size: 12px;line-height: 20px;}
+#sidemenu li {position: relative;border-bottom: 1px solid #DCE7F0;}
+#sidemenu a {display: block;color: #596677;padding: 9px 26px 9px 15px;border-top: 1px solid #F6F7F9;border-bottom: 1px solid #F6F7F9;text-decoration: none;}
+#sidemenu a img {margin-bottom: -4px;margin-right: 9px;}
+#sidemenu a:hover,.checked-action {text-decoration: none;background:#e4f1ff;color: #3F4C59;border-top: 1px solid #DCE7F0;border-bottom: 1px solid #DCE7F0;}
+#sidemenu .submenu li{border-bottom: none;}
+#sidemenu .submenu a {padding: 5px 12px 5px 30px;}
+#sidemenu .submenu .submenu a {padding: 5px 12px 5px 60px;}
+.submenu {padding: 0px;padding-bottom: 6px;display: none;}
+.subtitle .action .arrow {position: absolute;right: 10px;top: 18px;}
+.fixed{background-color:#ffffff;}
+.fixed a{font-weight:bold;}
+</style>
+
+<script>
+$(document).ready(function () {
+
+	$("#sidemenu li.subtitle a.action").toggle(
+	  function () {
+		  $(this).addClass('checked-action');
+		  $(this).siblings("ul").show();
+	  }, 
+	  function () {
+		  $(this).removeClass('checked-action');
+		  $(this).siblings("ul").hide();
+	  }
+	);
+
+	$('.openMain').click(function(){
+		parent.toURLIframe($(this).attr('href'));
+		return false;
+	});
+
+	if('{.cid}'=='lang') {
+		parent.closeLayout('west');
+	}
+	
+});
+</script>
+
+</head>
+<body>
+<div id="sidemenu">
+  <ul>
+  	<neq name="module" value="Guestbook">
+  	<volist name="dataList" id="one">
+  		<empty name="one['_child']">
+  			<li><a href="{~getSideMenuUrl($module,$one['id'],$one['burl'])}/lang/{$one.lang}" class="openMain">{~getLangTextSidemenu($_SESSION['hardware'],$one['lang'])}{$one.title}</a></li>
+  		<else/>
+  			<li class="subtitle">
+            <neq name="module" value="Market">
+    			<a class="action openMain" href="{~getSideMenuUrl($module,$one['_child'][0]['id'],$one['_child'][0]['burl'])}/lang/{$one.lang}">{~getLangTextSidemenu($_SESSION['hardware'],$one['lang'])}{$one.title}<img src="__ADMIN__/Public/imgs/arrow-down.png" width="7" height="4" alt="arrow" class="arrow"> </a>
+                <else/><!-- 如果是Market特殊处理 -->
+                 <if condition="$_SESSION['hardware'] eq 'pc'">
+                 <a class="action openMain" href="{~getSideMenuUrl($module,$one['_child'][0]['id'],$one['_child'][0]['burl'])}/lang/{$one.lang}">{~getLangTextSidemenu($_SESSION['hardware'],$one['lang'])}{$one.title}<img src="__ADMIN__/Public/imgs/arrow-down.png" width="7" height="4" alt="arrow" class="arrow"> </a>
+               		  <else/>
+                   <a class="action openMain" href="__APP__/Admin/Market/edit/cid/{$one['_child'][0]['id']}/lang/{$one.lang}">{~getLangTextSidemenu($_SESSION['hardware'],$one['lang'])}{$one.title}<img src="__ADMIN__/Public/imgs/arrow-down.png" width="7" height="4" alt="arrow" class="arrow"> </a>
+                 </if>
+                </neq>
+		  		<volist name="one['_child']" id="two">
+		  		<ul class="submenu" style="display:none;">
+		  			<empty name="two['_child']">
+                    	<neq name="module" value="Market">
+		  					<li><a href="{~getSideMenuUrl($module,$two['id'],$two['burl'])}/lang/{$one.lang}" class="openMain">{$two.title}</a></li>
+                        <else/><!-- 如果是Market特殊处理 -->
+                        <if condition="$_SESSION['hardware'] eq 'pc'">
+                        	<li><a href="{~getSideMenuUrl($module,$two['id'],$two['burl'])}/lang/{$one.lang}" class="openMain">{$two.title}</a></li>						<else/>
+                       		<li><a href="__APP__/Admin/Market/edit/cid/{$two['id']}/lang/{$one.lang}" class="openMain">{$two.title}</a></li>
+                         </if>
+                        </neq>
+		  			<else/>
+						<li class="subtitle">
+				        	<a class="action openMain" href="{~getSideMenuUrl($module,$two['id'],$two['burl'])}/lang/{$one.lang}" class="openMain">{$two.title}<img src="__ADMIN__/Public/imgs/arrow-down.png" width="7" height="4" alt="arrow" class="arrow"> </a>
+				        	<ul class="submenu" style="display:none;">
+				        		<volist name="two['_child']" id="three">
+				        			<li><a href="{~getSideMenuUrl($module,$three['id'],$three['burl'])}/lang/{$one.lang}" class="openMain">{$three.title}</a></li>
+				        		</volist>
+				        	</ul>
+				        </li>
+		  			</empty>
+		  		</ul>
+		  		</volist>
+	  		</li>
+  		</empty>
+    </volist>
+	</neq>
+	<eq name="module" value="Goods">
+		<eq name="alias" value="Goods">
+		<!-- <li class="fixed"><a href="__APP__/Admin/Goods/inquire/cid/{.cid}/lang/{.lang}" class="openMain"> 产品询价</a></li> -->
+		</eq>
+		<li class="fixed"><a href="__APP__/Admin/Goods/category/cid/{.cid}/lang/{.lang}" class="openMain"> 分类管理</a></li>
+		<li class="subtitle fixed">
+			<a class="action openMain checked-action" href="__APP__/Admin/Goods/isHomeList"> 推荐管理<img src="__ADMIN__/Public/imgs/arrow-down.png" width="7" height="4" alt="arrow" class="arrow"> </a>
+	  		<ul class="submenu" style="display: none; ">
+	  			<li><a href="__APP__/Admin/Goods/isHomeList/cid/{.cid}/lang/{.lang}" class="openMain">首页</a></li>
+	  			<li><a href="__APP__/Admin/Goods/isTopList/cid/{.cid}/lang/{.lang}" class="openMain">置顶</a></li>
+	  			<li><a href="__APP__/Admin/Goods/isPublish1List/cid/{.cid}/lang/{.lang}" class="openMain">已发布</a></li>
+	  			<li><a href="__APP__/Admin/Goods/isPublish0List/cid/{.cid}/lang/{.lang}" class="openMain">未发布</a></li>
+	  		</ul>
+		</li>
+	</eq>
+	<eq name="module" value="News">
+		<li class="subtitle fixed">
+			<a class="action openMain checked-action" href="__APP__/Admin/Goods/isHomeList"> 推荐管理<img src="__ADMIN__/Public/imgs/arrow-down.png" width="7" height="4" alt="arrow" class="arrow"> </a>
+	  		<ul class="submenu" style="display: none; ">
+	  			<li><a href="__APP__/Admin/News/isHomeList/cid/{.cid}/lang/{.lang}" class="openMain">首页</a></li>
+	  			<li><a href="__APP__/Admin/News/isTopList/cid/{.cid}/lang/{.lang}" class="openMain">置顶</a></li>
+	  			<li><a href="__APP__/Admin/News/isPublish1List/cid/{.cid}/lang/{.lang}" class="openMain">已发布</a></li>
+	  			<li><a href="__APP__/Admin/News/isPublish0List/cid/{.cid}/lang/{.lang}" class="openMain">未发布</a></li>
+	  		</ul>
+		</li>
+	</eq>
+	<eq name="module" value="Market">
+		<li class="fixed"><a href="__APP__/Admin/Market/category" class="openMain"> 区域管理</a></li>
+	</eq>
+	<eq name="module" value="System">
+		<li><a href="__APP__/Admin/System/index/cid/base" class="openMain">网站基本信息</a></li>
+		<?php
+		if( $_SESSION['hardware']=='pc' ) {
+			echo '<li><a href="__APP__/Admin/System/index/cid/contact" class="openMain">快捷联系方式</a></li>';
+		} else {
+			echo '<li><a href="__APP__/Admin/MobileContact/edit/cid/1" class="openMain">快捷联系方式</a></li>';
+		}
+		?>
+		<li><a href="__APP__/Admin/System/index/cid/seo" class="openMain">网站SEO设置</a></li>
+		
+		<li class="fixed"><a href="__APP__/Admin/System/index/cid/user" class="openMain">网站管理员</a></li>
+		<li class="fixed">
+			<a href="__APP__/Admin/Vote/index" class="openMain"> 投票管理</a>
+		</li>
+		<li class="fixed">
+			<a href="__APP__/Admin/Vote/export" class="openMain"> 导出数据</a>
+		</li>
+	</eq>
+	<eq name="module" value="Guestbook">
+		<li class="fixed"><a href="__APP__/Admin/Guestbook/index/c_root/21/cid/220/lang/zh-cn" class="openMain"> 留言类型</a></li>
+	</eq>
+	
+		
+	
+  </ul>
+</div>
+</body>
+</html>

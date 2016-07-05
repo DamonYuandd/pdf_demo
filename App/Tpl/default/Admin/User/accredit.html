@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>用户授权</title>
+
+<link rel="stylesheet" type="text/css" href="__ADMIN__/Public/css/base.css" />
+<script src="__ADMIN__/Public/js/jquery-1.7.1.min.js"></script>
+<script src="__ADMIN__/Public/js/base.js"></script>
+
+<script type="text/javascript">
+$(function(){
+	$('input[type=checkbox]').change(function(){
+		$.getJSON('__APP__/Admin/User/accredit', {'admin_id':"<?php echo $obj['id']; ?>",'nodes':$(this).val(),'checked':$(this).attr('checked')}, function(json){
+			console.log($(this).val());
+		});
+	});
+
+	<?php 
+		foreach( $nodesList as $key=>$value ) {
+		$nodes = $value['nodes'];
+		$index = strpos($nodes,'-');
+		$nodes = substr($nodes, $index+1);
+	?>
+	$("input[name='<?php echo $nodes ?>']").attr('checked', true);
+	<?php } ?>
+});
+</script>
+
+</head>
+<body>
+<h2>{$obj.username} 用户授权</h2>
+<form action="__APP__/Admin/User/accredit" method="post" class="form">  
+<input type="hidden" name="id" value="{$obj.id}">
+   <fieldset>
+       <ul class="align-list">
+       	<volist name="moduleList" id="vo">
+           <li>
+               <label><input type="checkbox" name="{$vo.alias}-index" value="{$vo.alias}-index"> {$vo.title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+               	<if condition="$vo['alias']=='News'">
+               	
+               	<?php 
+               		$newsCList = selectCategoryByPid( $vo['id'] );
+					foreach( $newsCList as $key=>$value ) {
+					$cidstr = '-cid-'.$value['id'];
+					if( $value['tpl_one']!='one' ) {
+               	?>
+               	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="News-index{$cidstr}" value="News-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="News-index{$cidstr}" value="News-index{$cidstr}"> 查看
+				   <input type="checkbox" name="News-edit{$cidstr}" value="News-edit{$cidstr}"> 编辑
+	               <input type="checkbox" name="News-add{$cidstr}" value="News-add{$cidstr}"> 添加
+	               <input type="checkbox" name="News-delete{$cidstr}" value="News-delete{$cidstr}"> 删除
+	              </li>
+	           	</div>
+	           	<?php } else { ?>
+	           	
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="News-index{$cidstr}" value="News-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="News-update{$cidstr}" value="News-saveOne{$cidstr}"> 修改
+	              </li>
+	           	</div>
+	           	
+	           	<?php }} ?>
+	           	
+	           	<elseif condition="$vo['alias']=='Link'"/>
+	           	
+	           	<?php 
+               		$newsCList = selectCategoryByPid( $vo['id'] );
+					foreach( $newsCList as $key=>$value ) {
+					$cidstr = '-cid-'.$value['id'];
+					if( $value['tpl_one']!='one' ) {
+               	?>
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Link-index{$cidstr}" value="Link-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="Link-isPublish{$cidstr}" value="Link-isPublish{$cidstr}"> 发布
+	               <input type="checkbox" name="Link-edit{$cidstr}" value="Link-edit{$cidstr}"> 编辑
+	               <input type="checkbox" name="Link-add{$cidstr}" value="Link-add{$cidstr}"> 添加
+	               <input type="checkbox" name="Link-delete{$cidstr}" value="Link-delete{$cidstr}"> 删除
+	               <input type="checkbox" name="Link-update{$cidstr}" value="Link-update{$cidstr}"> 修改
+	               <input type="checkbox" name="Link-move{$cidstr}" value="Link-move{$cidstr}"> 移动
+	               <input type="checkbox" name="Link-ordernum{$cidstr}" value="Link-ordernum{$cidstr}"> 排序
+	              </li>
+	           	</div>
+	           	
+	           	<?php } else { ?>
+	           	
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Link-index{$cidstr}" value="Link-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="Link-update{$cidstr}" value="News-saveOne{$cidstr}"> 修改
+	              </li>
+	           	</div>
+	           	
+	           	<?php }} ?>
+	           	
+	           	<elseif condition="$vo['alias']=='Market'"/>
+	           	
+	           	<?php 
+               		$newsCList = selectCategoryByPid( $vo['id'] );
+					foreach( $newsCList as $key=>$value ) {
+					$cidstr = '-cid-'.$value['id'];
+					if( $value['tpl_one']!='one' ) {
+               	?>
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Market-index{$cidstr}" value="Market-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="Market-isPublish{$cidstr}" value="Market-isPublish{$cidstr}"> 发布
+	               <input type="checkbox" name="Market-edit{$cidstr}" value="Market-edit{$cidstr}"> 编辑
+	               <input type="checkbox" name="Market-add{$cidstr}" value="Market-add{$cidstr}"> 添加
+	               <input type="checkbox" name="Market-delete{$cidstr}" value="Market-delete{$cidstr}"> 删除
+	               <input type="checkbox" name="Market-update{$cidstr}" value="Market-update{$cidstr}"> 修改
+	               <input type="checkbox" name="Market-move{$cidstr}" value="Market-move{$cidstr}"> 移动
+	               <input type="checkbox" name="Market-ordernum{$cidstr}" value="Market-ordernum{$cidstr}"> 排序
+	              </li>
+	           	</div>
+	           	
+	           	<?php } else { ?>
+	           	
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Market-index{$cidstr}" value="Market-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="Market-update{$cidstr}" value="News-saveOne{$cidstr}"> 修改
+	              </li>
+	           	</div>
+	           	
+	           	<?php }} ?>
+	           	
+	           	<elseif condition="$vo['alias']=='Survey'"/>
+	           	
+           		<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Survey-index"> 调查结果</label>
+	              </li>
+	           	</div>
+               		
+               	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Survey-index" value="Survey-index"> 调查列表</label>
+	               <input type="checkbox" name="Survey-isPublish" value="Survey-isPublish"> 发布
+	               <input type="checkbox" name="Survey-edit" value="Survey-edit"> 编辑
+	               <input type="checkbox" name="Survey-add" value="Survey-add"> 添加
+	               <input type="checkbox" name="Survey-delete" value="Survey-delete"> 删除
+	               <input type="checkbox" name="Survey-update" value="Survey-update"> 修改
+	               <input type="checkbox" name="Survey-move" value="Survey-move"> 移动
+	               <input type="checkbox" name="Survey-ordernum" value="Survey-ordernum"> 排序
+	              </li>
+	           	</div>
+	           	
+	           	<elseif condition="$vo['alias']=='Joinin'"/>
+	           	
+	           	<?php 
+               		$newsCList = selectCategoryByPid( $vo['id'] );
+					foreach( $newsCList as $key=>$value ) {
+					$cidstr = '-cid-'.$value['id'];
+					if( $value['tpl_one']!='one' ) {
+               	?>
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Joinin-index{$cidstr}" value="Joinin-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="Joinin-isPublish{$cidstr}" value="Joinin-isPublish{$cidstr}"> 发布
+	               <input type="checkbox" name="Joinin-edit{$cidstr}" value="Joinin-edit{$cidstr}"> 编辑
+	               <input type="checkbox" name="Joinin-add{$cidstr}" value="Joinin-add{$cidstr}"> 添加
+	               <input type="checkbox" name="Joinin-delete{$cidstr}" value="Joinin-delete{$cidstr}"> 删除
+	               <input type="checkbox" name="Joinin-update{$cidstr}" value="Joinin-update{$cidstr}"> 修改
+	               <input type="checkbox" name="Joinin-move{$cidstr}" value="Joinin-move{$cidstr}"> 移动
+	               <input type="checkbox" name="Joinin-ordernum{$cidstr}" value="Joinin-ordernum{$cidstr}"> 排序
+	              </li>
+	           	</div>
+	           	
+	           	<?php } else { ?>
+	           	
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Joinin-index{$cidstr}" value="Joinin-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="Joinin-update{$cidstr}" value="News-saveOne{$cidstr}"> 修改
+	              </li>
+	           	</div>
+	           	
+	           	<?php }} ?>
+	           	
+	           	<elseif condition="$vo['alias']=='Advert'"/>
+	           	
+	           	<?php 
+               		$newsCList = selectCategoryByPid( $vo['id'] );
+					foreach( $newsCList as $key=>$value ) {
+					$cidstr = '-cid-'.$value['id'];
+					if( $value['tpl_one']!='one' ) {
+               	?>
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Advert-index{$cidstr}" value="Advert-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="Advert-isPublish{$cidstr}" value="Advert-isPublish{$cidstr}"> 发布
+	               <input type="checkbox" name="Advert-edit{$cidstr}" value="Advert-edit{$cidstr}"> 编辑
+	               <input type="checkbox" name="Advert-add{$cidstr}" value="Advert-add{$cidstr}"> 添加
+	               <input type="checkbox" name="Advert-delete{$cidstr}" value="Advert-delete{$cidstr}"> 删除
+	               <input type="checkbox" name="Advert-update{$cidstr}" value="Advert-update{$cidstr}"> 修改
+	               <input type="checkbox" name="Advert-move{$cidstr}" value="Advert-move{$cidstr}"> 移动
+	               <input type="checkbox" name="Advert-ordernum{$cidstr}" value="Advert-ordernum{$cidstr}"> 排序
+	              </li>
+	           	</div>
+	           	
+	           	<?php } else { ?>
+	           	
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Advert-index{$cidstr}" value="Advert-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="Advert-update{$cidstr}" value="News-saveOne{$cidstr}"> 修改
+	              </li>
+	           	</div>
+	           	
+	           	<?php }} ?>
+	           	               	
+               	<elseif condition="$vo['alias']=='Goods'"/>
+               	
+               	<?php 
+               		$newsCList = selectCategoryByPid( $vo['id'] );
+					foreach( $newsCList as $key=>$value ) {
+					$cidstr = '-cid-'.$value['id'];
+					if( $value['tpl_one']!='one' ) {
+               	?>
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Goods-index{$cidstr}" value="Goods-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="Goods-isPublish{$cidstr}" value="Goods-isPublish{$cidstr}"> 发布
+	               <input type="checkbox" name="Goods-edit{$cidstr}" value="Goods-edit{$cidstr}"> 编辑
+	               <input type="checkbox" name="Goods-add{$cidstr}" value="Goods-add{$cidstr}"> 添加
+	               <input type="checkbox" name="Goods-delete{$cidstr}" value="Goods-delete{$cidstr}"> 删除
+	               <input type="checkbox" name="Goods-update{$cidstr}" value="Goods-update{$cidstr}"> 修改
+	               <input type="checkbox" name="Goods-move{$cidstr}" value="Goods-move{$cidstr}"> 移动
+	               <input type="checkbox" name="Goods-ordernum{$cidstr}" value="Goods-ordernum{$cidstr}"> 排序
+	              </li>
+	           	</div>
+	           	
+	           	<?php } else { ?>
+	           	
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Goods-index{$cidstr}" value="Goods-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="Goods-update{$cidstr}" value="News-saveOne{$cidstr}"> 修改
+	              </li>
+	           	</div>
+	           	
+	           	<?php }} ?>
+	           	
+               <div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Goods-category" value="Goods-category"> 商品分类</label>
+	              </li>
+	           </div>
+	           	
+	           	<elseif condition="$vo['alias']=='Download'"/>
+	           	
+	           	<?php 
+               		$newsCList = selectCategoryByPid( $vo['id'] );
+					foreach( $newsCList as $key=>$value ) {
+					$cidstr = '-cid-'.$value['id'];
+					if( $value['tpl_one']!='one' ) {
+               	?>
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Download-index{$cidstr}" value="Download-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="Download-isPublish{$cidstr}" value="Download-isPublish{$cidstr}"> 发布
+	               <input type="checkbox" name="Download-edit{$cidstr}" value="Download-edit{$cidstr}"> 编辑
+	               <input type="checkbox" name="Download-add{$cidstr}" value="Download-add{$cidstr}"> 添加
+	               <input type="checkbox" name="Download-delete{$cidstr}" value="Download-delete{$cidstr}"> 删除
+	               <input type="checkbox" name="Download-update{$cidstr}" value="Download-update{$cidstr}"> 修改
+	               <input type="checkbox" name="Download-move{$cidstr}" value="Download-move{$cidstr}"> 移动
+	               <input type="checkbox" name="Download-ordernum{$cidstr}" value="Download-ordernum{$cidstr}"> 排序
+	              </li>
+	           	</div>
+	           	
+	           	<?php } else { ?>
+	           	
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Download-index{$cidstr}" value="Download-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="Download-update{$cidstr}" value="News-saveOne{$cidstr}"> 修改
+	              </li>
+	           	</div>
+	           	
+	           	<?php }} ?>
+               	
+               	<elseif condition="$vo['alias']=='Job'"/>
+               	
+               	<?php 
+               		$newsCList = selectCategoryByPid( $vo['id'] );
+					foreach( $newsCList as $key=>$value ) {
+					$cidstr = '-cid-'.$value['id'];
+					if( $value['tpl_one']!='one' ) {
+               	?>
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Job-index{$cidstr}" value="Job-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="Job-isPublish{$cidstr}" value="Job-isPublish{$cidstr}"> 发布
+	               <input type="checkbox" name="Job-edit{$cidstr}" value="Job-edit{$cidstr}"> 编辑
+	               <input type="checkbox" name="Job-add{$cidstr}" value="Job-add{$cidstr}"> 添加
+	               <input type="checkbox" name="Job-delete{$cidstr}" value="Job-delete{$cidstr}"> 删除
+	               <input type="checkbox" name="Job-update{$cidstr}" value="Job-update{$cidstr}"> 修改
+	               <input type="checkbox" name="Job-move{$cidstr}" value="Job-move{$cidstr}"> 移动
+	               <input type="checkbox" name="Job-ordernum{$cidstr}" value="Job-ordernum{$cidstr}"> 排序
+	              </li>
+	           	</div>
+	           	
+	           	<?php } else { ?>
+	           	
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Job-index{$cidstr}" value="Job-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="Job-update{$cidstr}" value="News-saveOne{$cidstr}"> 修改
+	              </li>
+	           	</div>
+	           	
+	           	<?php }} ?>
+	           	
+               <div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Job-position" value="Job-position"> 职位管理</label>
+	               <input type="checkbox" name="Job-position-isPublish" value="Job-position-isPublish"> 发布
+	               <input type="checkbox" name="Job-position-add" value="Job-position-add"> 添加
+	               <input type="checkbox" name="Job-position-delete" value="Job-position-delete"> 删除
+	               <input type="checkbox" name="Job-position-update" value="Job-position-update"> 修改
+	               <input type="checkbox" name="Job-position-move" value="Job-position-move"> 移动
+	               <input type="checkbox" name="Job-position-ordernum" value="Job-position-ordernum"> 排序
+	              </li>
+	           </div>
+		           
+		        <elseif condition="$vo['alias']=='Guestbook'"/>
+		           
+		        <?php 
+               		$newsCList = selectCategoryByPid( $vo['id'] );
+					foreach( $newsCList as $key=>$value ) {
+					$cidstr = '-cid-'.$value['id'];
+					if( $value['tpl_one']!='one' ) {
+               	?>
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Guestbook-index{$cidstr}" value="Guestbook-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="Guestbook-edit{$cidstr}" value="Guestbook-edit{$cidstr}"> 回复
+	               <input type="checkbox" name="Guestbook-isPublish{$cidstr}" value="Member-isPublish{$cidstr}"> 审核
+	               <input type="checkbox" name="Guestbook-delete{$cidstr}" value="Guestbook-delete{$cidstr}"> 删除
+	               <input type="checkbox" name="Guestbook-move{$cidstr}" value="Guestbook-move{$cidstr}"> 移动
+	              </li>
+	           	</div>
+	           	
+	           	<?php } else { ?>
+	           	
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Guestbook-index{$cidstr}" value="Guestbook-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="Guestbook-update{$cidstr}" value="News-saveOne{$cidstr}"> 修改
+	              </li>
+	           	</div>
+	           	
+	           	<?php }} ?>
+	           	
+
+	           
+	           <div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="vo['alias']-position"> 查询状态</label>
+	               <input type="checkbox" name="" value="vo['alias']-position-add"> 未回复
+	               <input type="checkbox" name="" value="vo['alias']-position-add"> 已回复
+	               <input type="checkbox" name="" value="vo['alias']-position-delete"> 未审核
+	               <input type="checkbox" name="" value="vo['alias']-position-update"> 已审核
+	              </li>
+	           </div>
+		           
+		        <elseif condition="$vo['alias']=='Member'"/>
+		        
+		        <?php 
+               		$newsCList = selectCategoryByPid( $vo['id'] );
+					foreach( $newsCList as $key=>$value ) {
+					$cidstr = '-cid-'.$value['id'];
+					if( $value['tpl_one']!='one' ) {
+               	?>
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Member-index{$cidstr}" value="Member-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="Member-isPublish{$cidstr}" value="Member-isPublish{$cidstr}"> 审核
+	               <input type="checkbox" name="Member-delete{$cidstr}" value="Member-delete{$cidstr}"> 删除
+	               <input type="checkbox" name="Member-move{$cidstr}" value="Member-move{$cidstr}"> 移动
+	               <input type="checkbox" name="Member-ordernum{$cidstr}" value="Member-ordernum{$cidstr}"> 排序
+	              </li>
+	           	</div>
+	           	
+	           	<?php } else { ?>
+	           	
+	           	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="Member-index{$cidstr}" value="Member-index{$cidstr}"> <?php echo $value['title'];?></label>
+	               <input type="checkbox" name="Member-update{$cidstr}" value="News-saveOne{$cidstr}"> 修改
+	              </li>
+	           	</div>
+	           	
+	           	<?php }} ?>
+	           	
+               	</if>
+           </li>
+        </volist>
+        <li>
+               <label><input type="checkbox" name="System-index" value="System-index"> 系统设置&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+           		<?php 
+               		$newsCList = selectCategoryByPid( 30 );
+					foreach( $newsCList as $key=>$value ) {
+					$cidstr = '-cid-'.$value['id'];
+					if( $value['tpl_one']!='one' ) {
+               	?>
+               	<div class="more-box" style="border:none;">
+	           	  <li>
+	               <label><input type="checkbox" name="System-index{$cidstr}" value="System-index{$cidstr}"> <?php echo $value['title'];?></label>
+	              </li>
+	           	</div>
+	           	<?php }} ?>
+           </li>
+        </ul>
+    </fieldset>
+</form>
+
+
+</body>
+</html>

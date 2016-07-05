@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>树分类</title>
+
+<link rel="stylesheet" type="text/css" href="__ADMIN__/Public/css/base.css" />
+<link rel="stylesheet" href="__ADMIN__/Public/js/zTree/zTreeStyle.css" type="text/css" />
+<script src="__ADMIN__/Public/js/jquery-1.7.1.min.js"></script>
+<script src="__ADMIN__/Public/js/zTree/jquery.ztree.core-3.1.min.js"></script>
+<script src="__ADMIN__/Public/js/zTree/jquery.ztree.exedit-3.1.min.js"></script>
+
+<style type="text/css">
+.category-tool-bar,.category-title {width: 210px;overflow: hidden;padding: 8px 0;border-bottom: 1px solid #BBB;background: #E2ECF8;}
+</style>
+
+<script>
+var treeObj = treeManageObj = null, c_root="<?php echo $c_root; ?>", rightList='', titleText='';
+$(document).ready(function () {
+
+	var setting = {
+			async: {
+				enable: true,
+				url:"__APP__/Admin/CategoryTree/treeNode/c_root/"+window.c_root,
+				autoParam:["id", "name=n", "level=lv"]
+			}
+		};
+	treeObj = $.fn.zTree.init($("#treeCategory"), {
+		async: {
+			enable: true,
+			url:"__APP__/Admin/CategoryTree/treeNode/c_root/"+window.c_root,
+			autoParam:["id", "name=n", "level=lv"]
+		},
+		callback: {
+			onClick: function(e, treeId, treeNode){
+				if( window.c_root==401 ) {
+					rightList = 'Goods';
+				} else if( window.c_root==26 ) {
+					rightList = 'Download';
+				}
+				parent.toURLIframe('__APP__/Admin/'+rightList+'/index/cid/'+treeNode.id);
+			}
+		}
+	});
+	treeManageObj = $.fn.zTree.init($("#treeCategoryManage"), {
+		async: {
+			enable: true,
+			url:"__APP__/Admin/CategoryTree/treeNode/c_root/"+window.c_root,
+			autoParam:["id", "name=n", "level=lv"]
+		},
+		callback: {
+			onClick: function(e, treeId, treeNode){
+				parent.toURLIframe('__APP__/Admin/CategoryTree/edit/act/update/c_root/'+window.c_root+'/id/'+treeNode.id);
+			}
+		}
+	});
+
+	$("#add").bind("click", function(){
+		nodes = treeManageObj.getSelectedNodes();
+		treeNode = nodes[0];
+		var id = '';
+		if (nodes.length > 0) {
+			var id = treeNode.id;
+		}
+		parent.toURLIframe('__APP__/Admin/CategoryTree/edit/act/add/c_root/'+window.c_root+'/id/'+id);
+	});
+
+	$("#edit").bind("click", function(){
+		nodes = treeManageObj.getSelectedNodes(),
+		treeNode = nodes[0];
+		if (nodes.length == 0) {
+			alert("请先选择一个分类");
+			return;
+		}
+		parent.toURLIframe('__APP__/Admin/CategoryTree/edit/act/update/c_root/'+window.c_root+'/id/'+treeNode.id);
+	});
+
+	$("#move").bind("click", function(){
+		nodes = treeManageObj.getSelectedNodes(),
+		treeNode = nodes[0];
+		if (nodes.length == 0) {
+			alert("请先选择一个分类");
+			return;
+		}
+		parent.toURLIframe('__APP__/Admin/CategoryTree/edit/act/move/c_root/'+window.c_root+'/id/'+treeNode.id+'/tid/'+treeNode.tId);
+	});
+	
+	$("#delete").bind("click", function(){
+		nodes = treeManageObj.getSelectedNodes();
+		treeNode = nodes[0];
+		if (nodes.length == 0) {
+			alert("请先选择一个分类");
+			return;
+		}
+
+		if(confirm("确认删除分类 “" + treeNode.name + "” 吗？")) {
+			$.get('__APP__/Admin/CategoryTree/deleteTreeNode',{'id':treeNode.id,'c_root':window.c_root},function(bool){
+				if( bool=='sub_exist' ){
+					alert('删除之前请确认没有子分类！');
+				} else {
+					treeManageObj.removeNode(treeNode);
+				}
+			});
+		}
+	});
+
+	
+	$('#category_list').click(function(){
+		$('#treeCategory').show();
+		$('.category-tool-bar').hide();
+		$('#treeCategoryManage').hide();
+		
+	});
+
+	$('#category_manage').click(function(){
+		$('.category-tool-bar').show();
+		$('#treeCategoryManage').show();
+		$('#treeCategory').hide();
+	});
+	
+});
+
+//添加完成刷新子节点
+function refreshChildNodes(pid) {
+	if(pid==window.c_root){
+		treeManageObj.reAsyncChildNodes(null, "refresh");
+		return ;
+	}
+	
+	var nodes = treeManageObj.getSelectedNodes();
+	if (nodes.length>0) {
+		nodes[0].isParent=true;
+		treeManageObj.reAsyncChildNodes(nodes[0], "refresh");
+	}
+	
+}
+
+//修改更新节点标题
+function updateNodeText(name) {
+	var nodes = treeManageObj.getSelectedNodes();
+	if (nodes.length>0) {
+		nodes[0].name = name;
+		treeManageObj.updateNode(nodes[0], "refresh");
+	}
+}
+
+//删除节点
+function deleteNode(id) {
+	treeManageObj.removeNode(treeManageObj.getNodeByParam('id',id));
+}
+                     
+</script>
+
+</head>
+<body>
+<?php 
+if( $c_root==20 ) {
+	$titleText = '产品';
+} elseif( $c_root==26 ) {
+	$titleText = '下载';
+}
+?>
+<div id="category_list" class="category-title" style="text-align:center;font-size:14px;font-weight:bold;cursor:pointer;background-image: url('__ADMIN__/Public/imgs/bg_blueenergy.png');">
+<?php echo $titleText; ?>列表管理</div>
+<ul id="treeCategory" class="ztree"></ul>
+
+<div id="category_manage" class="category-title" style="text-align:center;font-size:14px;font-weight:bold;cursor:pointer;background-image: url('__ADMIN__/Public/imgs/bg_blueenergy.png');">
+<?php echo $titleText; ?>分类管理</div>
+<div class="category-tool-bar" style="display:none;">
+	&nbsp;&nbsp;<a href="#" id="add"><img src="__ADMIN__/Public/imgs/add10x10.png" /> 添加</a>&nbsp;&nbsp;
+	<a href="#" id="edit"><img src="__ADMIN__/Public/imgs/edit10x10.png" /> 编辑</a>&nbsp;&nbsp;
+	<a href="#" id="move"><img src="__ADMIN__/Public/imgs/move10x10.png" /> 移动</a>&nbsp;&nbsp;
+	<a href="#" id="delete"><img src="__ADMIN__/Public/imgs/delete10x10.png" /> 删除</a>&nbsp;&nbsp;
+</div>
+<ul id="treeCategoryManage" class="ztree" style="display:none;"></ul>
+
+
+</body>
+</html>
