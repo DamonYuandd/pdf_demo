@@ -63,57 +63,50 @@ class IndexAction extends HomeAction
 		}
 	}
 	
+	
 	public function pdfshow(){
+		$this->assign('test','asdasdasd');
+		//获取HTML 标签
+		$htmlInfo = $this->fetch($this->web_theme.':Index:ch');
 		//import('@.ORG.tcpdf.Tcpdf');
 		import('ORG.tcpdf.Tcpdf');
 		$pdf = New Tcpdf('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetCreator(PDF_CREATOR);
-		$pdf->SetAuthor('Nicola Asuni');
-		$pdf->SetTitle('TCPDF Example 006');
-		$pdf->SetSubject('TCPDF Tutorial');
-		$pdf->SetKeywords('TCPDF, PDF, example, test, guide');
+		$pdf->SetAuthor('Damon Yuan');
+		 
 		
-		// set default header data
-		$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 006', PDF_HEADER_STRING);
-		
-		// set header and footer fonts
-		$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-		$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-		
-		// set default monospaced font
-		$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-		
-		// set margins
-		$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-		$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-		$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-		
-		// set auto page breaks
-		$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-		
-		// set image scale factor
-		$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-		
-		
-		
-		// ---------------------------------------------------------
+		// remove default header/footer
+		$pdf->setPrintHeader(false);
+		$pdf->setPrintFooter(false);
 		
 		// set font
-		$pdf->SetFont('dejavusans', '', 10);
+		$pdf->SetFont('stsongstdlight', '', 10);
 		
+		
+
+
+		//第一页
 		// add a page
 		$pdf->AddPage();
-		
-		// writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align='')
-		// writeHTMLCell($w, $h, $x, $y, $html='', $border=0, $ln=0, $fill=0, $reseth=true, $align='', $autopadding=true)
-		
 		// create some HTML content
-		$html = '<h1>HTML Example</h1>
-Some special characters: &lt; € &euro; &#8364; &amp; è &egrave; &copy; &gt; \\slash \\\\double-slash \\\\\\triple-slash
-<h2>List</h2>
-List example:
-<ol>
-	';
+		
+		// 设置背景图
+		$bMargin = $pdf->getBreakMargin();
+		// get current auto-page-break mode
+		$auto_page_break = $pdf->getAutoPageBreak();
+		// disable auto-page-break
+		$pdf->SetAutoPageBreak(false, 0);
+		// set bacground image
+		$img_file = dirname(__FILE__).'../../../../../Public/images/bg1.jpg';
+		
+		$pdf->Image($img_file, 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+		// restore auto-page-break status
+		$pdf->SetAutoPageBreak($auto_page_break, $bMargin);
+		// set the starting point for the page content
+		$pdf->setPageMark();
+		
+		
+		$html = $htmlInfo;
 		
 		// output the HTML content
 		$pdf->writeHTML($html, true, false, true, false, '');
@@ -121,6 +114,16 @@ List example:
 		$pdf->lastPage();
 		
 		// ---------------------------------------------------------
+		
+		//第二页
+		$pdf->AddPage();
+		
+		$html = $htmlInfo;
+		
+		// output the HTML content
+		$pdf->writeHTML($html, true, false, true, false, '');
+		
+		$pdf->lastPage();
 		
 		//Close and output PDF document
 		$pdf->Output('example_006.pdf', 'I');
