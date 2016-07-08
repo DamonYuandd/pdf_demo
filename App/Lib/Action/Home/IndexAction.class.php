@@ -116,14 +116,14 @@ class IndexAction extends HomeAction
 		// ---------------------------------------------------------
 		
 		//第二页
-		$pdf->AddPage();
+		/* $pdf->AddPage();
 		
 		$html = $htmlInfo;
 		
 		// output the HTML content
 		$pdf->writeHTML($html, true, false, true, false, '');
 		
-		$pdf->lastPage();
+		$pdf->lastPage(); */
 		
 		//Close and output PDF document
 		$pdf->Output('example_006.pdf', 'I');
